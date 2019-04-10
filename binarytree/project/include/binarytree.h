@@ -13,6 +13,7 @@ private:
 
    // private helper functions
    void insertNode(BinaryTreeNode<T>*& ptr, const T & value);
+   BinaryTreeNode<T>* searchInTree(BinaryTreeNode<T> * ptr, const T & value);
    void preOrderSubTree(const BinaryTreeNode<T> * ptr, ostream & os = cout) const;
    void inOrderSubTree(const BinaryTreeNode<T> * ptr, ostream & os = cout) const;
    void postOrderSubTree(const BinaryTreeNode<T> * ptr, ostream & os = cout) const;
@@ -21,6 +22,7 @@ public:
    BinaryTree();   // Constructor
    ~BinaryTree();  // Destructor
    void insert(const T & value);
+   BinaryTreeNode<T>* searchInTree(const T & value);
    bool isEmpty() const;
    void preOrderTraversal(ostream & os = cout) const;
    void inOrderTraversal(ostream & os = cout) const;

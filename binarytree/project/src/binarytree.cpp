@@ -51,6 +51,27 @@ void BinaryTree<T>::insertNode(BinaryTreeNode<T>*& ptr, const T & value) {
 }
 
 template <typename T>
+BinaryTreeNode<T>* BinaryTree<T>::searchInTree(const T & value){
+  return searchInTree(rootPtr, value);
+}
+
+template <typename T>
+BinaryTreeNode<T>* BinaryTree<T>::searchInTree(BinaryTreeNode<T> * ptr, const T & value) {
+  if(ptr == 0) {
+    return NULL;
+  }
+  else if(value == ptr->data) {
+    return ptr;
+  }
+  else if( value < ptr->data) {
+    return searchInTree(ptr->leftPtr, value);
+  }
+  else {
+    return searchInTree(ptr->rightPtr, value);
+  }
+}
+
+template <typename T>
 void BinaryTree<T>::preOrderTraversal(ostream & os) const {
    os << "{ ";
    preOrderSubTree(rootPtr);
