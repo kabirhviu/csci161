@@ -11,11 +11,7 @@ private:
   T* elements;
 
 public:
-  ArrayStack(int capacity) {
-    this->capacity = capacity;
-    this->elements = new T[capacity];
-    this->top =-1;
-  }
+  ArrayStack(int capacity): top(-1), capacity(capacity), elements(new T[capacity]) { }
 
   ~ArrayStack() {
     delete [] elements;
