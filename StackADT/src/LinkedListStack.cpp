@@ -14,10 +14,7 @@ private:
   Node* top;
 
 public:
-  LinkedListStack() {
-    size = 0;
-    top = NULL;
-  }
+  LinkedListStack(): size(0), top(NULL) { }
 
   ~LinkedListStack() {
     while (!isEmpty()){
