@@ -21,6 +21,7 @@ public:
 };
 
 class CodecJPEG : public Codec {
+	
 public:
   int encode (int raw) {
     cout<<raw<<" encoded by CodecJPEG..."<<endl;
@@ -85,6 +86,7 @@ int main() {
   //although the object is from CodecJPEG class
   // cout<<refToCodec.encode(raw)<<endl;
   Codec& refToCodec = codecMPEG;
+  //cout<<refToCodec.dummy<<endl;
   //Still calls encode() from Codec class
   //although the object is from CodecMPEG class
   cout<<refToCodec.encode(raw)<<endl;

@@ -2,16 +2,23 @@
 
 using namespace std;
 
+class LinkedList;		//Forward declaration is required to use the class in the ListNode 
+
+class ListNode {
+private:
+  int data;
+  ListNode* next;
+
+public:  
+  ListNode(int data): data(data), next(NULL) {}
+  friend class LinkedList;
+  friend ostream& operator << (ostream&, const LinkedList&); 
+};
+
 class LinkedList {
-protected:
-  class ListNode {
-    public:
-       int data;
-       ListNode* next;
-       ListNode(int data): data(data), next(NULL) {}
-  };
-  ListNode* head;
-  int size;
+  private:
+     ListNode* head;
+     int size;
   public:
      LinkedList();
      ~LinkedList();
@@ -21,7 +28,6 @@ protected:
      void insertAtEnd(int);
      int removeFromFront();
      int removeFromEnd();
-     int* asArray();
      friend ostream& operator << (ostream&, const LinkedList&);
 };
 
@@ -31,7 +37,7 @@ public:
   ~Stack();
   void push(int);
   int pop();
-  friend ostream& operator << (ostream&, const Stack&);
+  // friend ostream& operator << (ostream&, const Stack&);
 };
 
 class Queue : public LinkedList {
@@ -40,10 +46,10 @@ public:
   ~Queue();
   void enqueue(int element);
   int dequeue();
-  friend ostream& operator << (ostream&, const Queue&);
+  // friend ostream& operator << (ostream&, const Queue&);
 };
 
-LinkedList::LinkedList():head(new ListNode(-1)), size(0){}
+LinkedList::LinkedList():head(new ListNode(-1)), size(0){cout<<"LinkedList constructor....."<<endl;}
 
 LinkedList::~LinkedList(){
   cout<<"LinkedList destructor freeing memory...."<<endl;
@@ -117,22 +123,8 @@ int LinkedList::removeFromEnd(){
   return element;
 }
 
-int* LinkedList::asArray() {
-  ListNode* current = head->next;
-  if(current == NULL) {
-    return NULL;
-  }
-  int* arr = new int[size];
-  int i = 0;
-  while(current!=NULL) {
-    arr[i++] = current->data;
-    current = current->next;
-  }
-  return arr;
-}
-
 ostream& operator << (ostream& out, const LinkedList& list) {
-  LinkedList::ListNode* current = list.head->next;
+  ListNode* current = list.head->next;
   while(current != NULL) {
     out<<current->data<<" ";
     current = current->next;
@@ -140,8 +132,8 @@ ostream& operator << (ostream& out, const LinkedList& list) {
   return out;
 }
 
-Stack::Stack():LinkedList(){}
-Stack::~Stack(){}
+Stack::Stack():LinkedList(){cout<<"Stack constructor ...."<<endl;}
+Stack::~Stack(){ cout<<"Stack destructor ..."<<endl;}
 void Stack::push(int element){
   insertAtFront(element);
 }
@@ -149,17 +141,17 @@ int Stack::pop(){
   return removeFromFront();
 }
 
-ostream& operator << (ostream& out, const Stack& stack) {
-  Stack::ListNode* current = stack.head->next;
-  while(current != NULL) {
-    out<<current->data<<" ";
-    current = current->next;
-  }
-  return out;
-}
+//ostream& operator << (ostream& out, const Stack& stack) {
+//  Stack::ListNode* current = stack.head->next;
+//  while(current != NULL) {
+//    out<<current->data<<" ";
+//    current = current->next;
+//  }
+//  return out;
+//}
 
-Queue::Queue():LinkedList(){}
-Queue::~Queue(){}
+Queue::Queue():LinkedList(){cout<<"Queue constructor....."<<endl;}
+Queue::~Queue(){cout<<"Queue destructor....."<<endl;}
 void Queue::enqueue(int element){
   insertAtEnd(element);
 }
@@ -167,21 +159,20 @@ int Queue::dequeue(){
   return removeFromFront();
 }
 
-ostream& operator << (ostream& out, const Queue& queue) {
-  Queue::ListNode* current = queue.head->next;
-  while(current != NULL) {
-    out<<current->data<<" ";
-    current = current->next;
-  }
-  return out;
-}
+//ostream& operator << (ostream& out, const Queue& queue) {
+//  Queue::ListNode* current = queue.head->next;
+//  while(current != NULL) {
+//    out<<current->data<<" ";
+//    current = current->next;
+//  }
+//  return out;
+//}
+
 
 int main() {
 
   LinkedList linkedList;
   int elements[] = {10, 20, 30, 40, 50};
-  int* elementsFromList;
-  int listSize;
 
   cout<<"List isEmpty: "<<(linkedList.isEmpty()? "true": "false")<<endl;
   for(int i=0; i<5; i++) {
@@ -192,12 +183,6 @@ int main() {
   cout<<"List isEmpty: "<<(linkedList.isEmpty()? "true": "false")<<endl;
   cout<<"List elements after adding at end:"<<endl<<linkedList<<endl;
 
-  listSize = linkedList.getSize();
-  elementsFromList = linkedList.asArray();
-  cout<<"List elements as Array: "<<endl;
-  for(int i=0; i<listSize; i++) {
-    cout<<elementsFromList[i]<<" ";
-  }
 
   cout<<endl;
 
@@ -221,7 +206,11 @@ int main() {
     cout<<linkedList<<endl;
   }
 
+
+
   Stack stack;
+  
+
   for (int i=0; i<5; i++) {
     stack.push(elements[i]);
   }
@@ -229,13 +218,13 @@ int main() {
   cout<<"Stack isEmpty: "<<(stack.isEmpty()? "true": "false")<<endl;
   cout<<"Stack size: "<<stack.getSize()<<endl;
 
-  cout<<stack<<endl;
+  /*
+   * Stack does not inherit operator << overloaded friend function.
+   * Following statment will not work.
+   */
+  //cout<<stack<<endl; 
+ 
 
-  elementsFromList = stack.asArray();
-  cout<<"Stack elements as Array: "<<endl;
-  for(int i=0; i<listSize; i++) {
-    cout<<elementsFromList[i]<<" ";
-  }
   cout<<stack.pop()<<endl;
   cout<<stack.pop()<<endl;
   cout<<stack.pop()<<endl;
@@ -247,30 +236,62 @@ int main() {
   cout<<"Stack size: "<<stack.getSize()<<endl;
 
 
+  /*
+   * Unwanted operations on Stack
+   */
+  stack.insertAtEnd(10);
+  stack.insertAtEnd(20);
+  stack.insertAtEnd(30);
+  cout<<"Stack elements insertion order: 10 20 30"<<endl;
+  cout<<"Stack elements removal order that violates stack invarient : ";
+  cout<<stack.removeFromFront()<<" ";
+  cout<<stack.removeFromFront()<<" ";
+  cout<<stack.removeFromFront()<<endl;
+
+  cout<<endl;
+
+
+
   Queue queue;
   for (int i=0; i<5; i++) {
     queue.enqueue(elements[i]);
   }
 
-  cout<<queue<<endl;
-  elementsFromList = queue.asArray();
-  cout<<"Queue elements as Array: "<<endl;
-  for(int i=0; i<listSize; i++) {
-    cout<<elementsFromList[i]<<" ";
-  }
-  cout<<endl;
+  cout<<"Queue isEmpty: "<<(queue.isEmpty()? "true": "false")<<endl;
+  cout<<"Queue size: "<<queue.getSize()<<endl;
+
+
+  /*
+   * Queue does not inherit operator << overloaded friend function.
+   * Following statment will not work.
+   */
+  //cout<<queue<<endl 
+ 
+
+  cout<<queue.dequeue()<<endl;
+  cout<<queue.dequeue()<<endl;
+  cout<<queue.dequeue()<<endl;
+  cout<<queue.dequeue()<<endl;
+  cout<<queue.dequeue()<<endl;
+  cout<<queue.dequeue()<<endl;
 
   cout<<"Queue isEmpty: "<<(queue.isEmpty()? "true": "false")<<endl;
   cout<<"Queue size: "<<queue.getSize()<<endl;
 
-  cout<<queue.dequeue()<<endl;
-  cout<<queue.dequeue()<<endl;
-  cout<<queue.dequeue()<<endl;
-  cout<<queue.dequeue()<<endl;
-  cout<<queue.dequeue()<<endl;
-  cout<<queue.dequeue()<<endl;
 
-  cout<<"Queue isEmpty: "<<(queue.isEmpty()? "true": "false")<<endl;
-  cout<<"Queue size: "<<queue.getSize()<<endl;
+
+  /*
+   * Unwanted operations on Queue
+   */  
+  queue.insertAtFront(10);
+  queue.insertAtFront(20);
+  queue.insertAtFront(30);
+  cout<<"Queue elements insertion order: 10 20 30"<<endl;
+  cout<<"Queue elements removal order that violates queue invarient: ";
+  cout<<queue.removeFromFront()<<" ";
+  cout<<queue.removeFromFront()<<" ";
+  cout<<queue.removeFromFront()<<endl;
+
+
   return 0;
 }

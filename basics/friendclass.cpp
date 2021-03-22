@@ -17,7 +17,7 @@ private:
 public:
   Node():data(0), next(NULL) {}
   Node(int data): data(data), next(NULL) {}
-  friend int main();
+  int getData() {return data;} 
   friend class LinkedList;
 };
 
@@ -41,7 +41,7 @@ LinkedList::~LinkedList() {
     delete temp;
   }
   delete head;
-  cout<<"Freeing all memory"<<endl;
+  cout<<"LinkedList destructor ...."<<endl;
 }
 
 void LinkedList::append(int data) {
@@ -98,7 +98,7 @@ Node* LinkedList::search(int data) {
 void LinkedList::show() {
   Node* current = head->next;
   while(current!= NULL) {
-    cout<<current->data<<"\t";
+    cout<<current->data<<" ";
     current = current->next;
   }
   cout<<endl;
@@ -111,9 +111,9 @@ int main() {
   }
 
   linkedList.show();
-  cout<<"Searching 10: "<<linkedList.search(10)->data<<endl;
+  cout<<"Searching 10: "<<linkedList.search(10)->getData()<<endl;
   cout<<"Searching 15: "<<linkedList.search(15)<<endl;
-  cout<<"Searching 90: "<<linkedList.search(90)->data<<endl;
+  cout<<"Searching 90: "<<linkedList.search(90)->getData()<<endl;
   cout<<"Searching 100: "<<linkedList.search(100)<<endl;
   cout<<"After deleting 10: "<<endl;
   linkedList.remove(10);

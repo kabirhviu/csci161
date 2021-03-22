@@ -17,25 +17,23 @@ public:
 	id(new string(id)), name(new string(name)), gpa(gpa) {}
 
 	// Copy constructor
-	Student(const Student& other):id(new string(other.getId())),
-																name(new string(other.getName())),
-																gpa(other.getGpa()){}
+	Student(const Student& other):id(new string(*other.id)), name(new string(*other.name)),gpa(other.gpa) {}
 
 	//Copy assignment
 	// Student& operator= (const Student& other) {
 	// 	delete id;
-	// 	id = new string(other.getId());
+	// 	id = new string(*other.id);
 	// 	delete name;
-	// 	name = new string(other.getName());
-	// 	gpa = other.getGpa();
+	// 	name = new string(*other.name);
+	// 	gpa = other.gpa;
 	// 	return *this;
 	// }
 
 	//Copy assignment version 2
 	Student& operator= (const Student& other) {
-		*id = other.getId();
-		*name = other.getName();
-		gpa = other.getGpa();
+		*id = *other.id;		//Does not need to do delete and new on *id and *name since they are string objects
+		*name = *other.name;		//string class has copy assignment function defined, copy assignment function takes care of the memory
+		gpa = other.gpa;
 		return *this;
 	}
 
