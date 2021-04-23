@@ -5,14 +5,11 @@ BUILD=build
 BINARY=bin
 
 
-all: ${BINARY}/TestStack
+${BINARY}/StackADTMain: ${BUILD}/StackADTMain.o ${BUILD}/ArrayStack.o ${BUILD}/LinkedListStack.o
+	${CC} -I${INCLUDE} -o ${BINARY}/StackADTMain ${BUILD}/StackADTMain.o ${BUILD}/ArrayStack.o ${BUILD}/LinkedListStack.o
 
-
-${BINARY}/TestStack: ${BUILD}/TestStack.o ${BUILD}/ArrayStack.o ${BUILD}/LinkedListStack.o
-	${CC} -I${INCLUDE} -o ${BINARY}/TestStack ${BUILD}/TestStack.o ${BUILD}/ArrayStack.o ${BUILD}/LinkedListStack.o
-
-${BUILD}/TestStack.o:
-	${CC} -c -I${INCLUDE} -o ${BUILD}/TestStack.o ${SRC}/TestStack.cpp
+${BUILD}/StackADTMain.o:
+	${CC} -c -I${INCLUDE} -o ${BUILD}/StackADTMain.o ${SRC}/StackADTMain.cpp
 
 ${BUILD}/ArrayStack.o:
 	$(CC) -c -I${INCLUDE} -o ${BUILD}/ArrayStack.o ${SRC}/ArrayStack.cpp
@@ -27,5 +24,5 @@ ${BUILD}/LinkedListStack.o:
 clean:
 	rm -rf ${BUILD}/* ${BINARY}/*
 
-run: ${BINARY}/TestStack
-	${BINARY}/TestStack
+run: ${BINARY}/StackADTMain
+	${BINARY}/StackADTMain

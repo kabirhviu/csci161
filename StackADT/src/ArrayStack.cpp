@@ -14,22 +14,29 @@ private:
 
 public:
 
-  ArrayStack(): top(-1), capacity(capacity), elements(new T[capacity]) {}	  
+  ArrayStack(): top(-1), capacity(capacity), elements(new T[capacity]) {
+  	cout<<"ArrayStack::default constructor......."<<endl;
+  }	  
   
-  ArrayStack(int capacity): top(-1), capacity(capacity), elements(new T[capacity]) { }
+  ArrayStack(int capacity): top(-1), capacity(capacity), elements(new T[capacity]) { 
+  	cout<<"ArrayStack::regular constructor......."<<endl;
+  }
   
   ArrayStack(const ArrayStack& copy): top(copy.top), capacity(copy.capacity), elements(new T[capacity]) {
 	  for (int i=0; i<top; i++) {
 		  elements[i] = copy.elements[i];
 	  }
+	  cout<<"ArrayStack::copy constructor......."<<endl;
   }
   
   ArrayStack(ArrayStack&& temp): top(temp.top), capacity(temp.capacity), elements(temp.elements) {
 	  temp.elements = NULL;
+	  cout<<"ArrayStack::move constructor......"<<endl;
   }
 
   ~ArrayStack() {
     delete [] elements;
+    cout<<"ArrayStack::destructor......"<<endl;
   }
 
   ArrayStack& operator = (const ArrayStack& copy) {
@@ -40,6 +47,7 @@ public:
 	for ( int i=0; i<top; i++ ) {
 		elements[i] = copy.elements[i];
 	}
+	cout<<"ArrayStack::copy assignment......."<<endl;
 	return *this;
   }
 
@@ -48,6 +56,7 @@ public:
 	  capacity = temp.capacity;
 	  delete [] elements;
 	  elements = temp.elements;
+	  cout<<"ArrayStack::move assignment......"<<endl;
 	  return *this;
   }
 
