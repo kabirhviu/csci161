@@ -6,7 +6,7 @@ BINARY=bin
 
 
 all: ${BINARY}/TestStack
-	echo Building TestStack ..........
+
 
 ${BINARY}/TestStack: ${BUILD}/TestStack.o ${BUILD}/ArrayStack.o ${BUILD}/LinkedListStack.o
 	${CC} -I${INCLUDE} -o ${BINARY}/TestStack ${BUILD}/TestStack.o ${BUILD}/ArrayStack.o ${BUILD}/LinkedListStack.o
@@ -21,11 +21,11 @@ ${BUILD}/LinkedListStack.o:
 	$(CC) -c -I${INCLUDE} -o ${BUILD}/LinkedListStack.o ${SRC}/LinkedListStack.cpp
 
 
-.PHONY: clean
+.PHONY: clean run
 
 
 clean:
-	rm -rf ${BUILD}/* ${BIN}/*
+	rm -rf ${BUILD}/* ${BINARY}/*
 
 run: ${BINARY}/TestStack
 	${BINARY}/TestStack
