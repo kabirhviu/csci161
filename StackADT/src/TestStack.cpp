@@ -21,7 +21,7 @@ int main(){
     * stack pointer can be reassigned to linkedListStack object and
     * the rest of the code will still be reusable without any modification.
     */ 
-  //stack = &linkedListStack;   
+ // stack = &linkedListStack;   
 
   cout << "Stack isEmpty: " << stack->isEmpty() << endl;
   cout << "Stack size: " << stack->getSize() << endl;
