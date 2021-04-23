@@ -139,9 +139,9 @@ string Employee::getPhone() const {
 	return phone;
 }
 		
-//double Employee::getSalary() const {
-//	return salary;
-//}
+double Employee::getSalary() const {
+	return salary;
+}
 		
 ostream& operator << (ostream& out, const Employee& employee) {
 	out<<"Employee Number: "<<employee.employeeNumber<<", Name: "<<employee.name<<

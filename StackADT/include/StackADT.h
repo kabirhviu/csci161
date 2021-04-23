@@ -4,11 +4,13 @@
 template <typename T>
 class StackADT {
 public:
-  virtual void push(T element) = 0;
-  virtual T pop() = 0;
-  virtual T peek() = 0;
-  virtual int getSize() = 0;
-  virtual bool isEmpty() = 0;
+	StackADT() {}
+	virtual ~StackADT() {}
+  	virtual void push(T element) = 0;
+  	virtual T pop() = 0;
+  	virtual T peek() = 0;
+  	virtual int getSize() = 0;
+  	virtual bool isEmpty() = 0;
 };
 
 #endif
