@@ -14,7 +14,7 @@ private:
 
 public:
 
-  ArrayStack(): top(-1), capacity(capacity), elements(new T[capacity]) {
+  ArrayStack(): top(-1), capacity(DEFAULT_CAPACITY), elements(new T[capacity]) {
   	cout<<"ArrayStack::default constructor......."<<endl;
   }	  
   
