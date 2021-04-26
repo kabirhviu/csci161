@@ -1,28 +1,39 @@
-CC=g++ -Wall
-SRC=src
+CC=g++ 
+CFLAGS=-Wall -ggdb
+SOURCE=src
 INCLUDE=include
 BUILD=build
 BINARY=bin
 
 
-${BINARY}/StackADTMain: ${BUILD}/StackADTMain.o ${BUILD}/ArrayStack.o ${BUILD}/LinkedListStack.o
-	${CC} -I${INCLUDE} -o ${BINARY}/StackADTMain ${BUILD}/StackADTMain.o ${BUILD}/ArrayStack.o ${BUILD}/LinkedListStack.o
+all: ${BINARY}/StackADTMain ${BINARY}/ArrayStackMain ${BINARY}/LinkedListStackMain
 
-${BUILD}/StackADTMain.o:
-	${CC} -c -I${INCLUDE} -o ${BUILD}/StackADTMain.o ${SRC}/StackADTMain.cpp
-
-${BUILD}/ArrayStack.o:
-	$(CC) -c -I${INCLUDE} -o ${BUILD}/ArrayStack.o ${SRC}/ArrayStack.cpp
-
-${BUILD}/LinkedListStack.o:
-	$(CC) -c -I${INCLUDE} -o ${BUILD}/LinkedListStack.o ${SRC}/LinkedListStack.cpp
+${BINARY}/StackADTMain: ${SOURCE}/StackADTMain.cpp ${SOURCE}/ArrayStack.cpp ${SOURCE}/LinkedListStack.cpp ${INCLUDE}/StackADT.h
+	${CC} ${CFLAGS} -I${INCLUDE} -o ${BINARY}/StackADTMain ${SOURCE}/StackADTMain.cpp
 
 
-.PHONY: clean run
+${BINARY}/ArrayStackMain: ${SOURCE}/ArrayStackMain.cpp ${SOURCE}/ArrayStack.cpp  ${INCLUDE}/StackADT.h
+	${CC} ${CFLAGS} -I${INCLUDE} -o ${BINARY}/ArrayStackMain ${SOURCE}/ArrayStackMain.cpp
+
+
+
+${BINARY}/LinkedListStackMain: ${SOURCE}/LinkedListStackMain.cpp ${SOURCE}/LinkedListStack.cpp ${INCLUDE}/StackADT.h
+	${CC} ${CFLAGS} -I${INCLUDE} -o ${BINARY}/LinkedListStackMain ${SOURCE}/LinkedListStackMain.cpp
+
+
+.PHONY: clean run-adt-stack run-array-stack run-linked-stack
 
 
 clean:
 	rm -rf ${BUILD}/* ${BINARY}/*
 
-run: ${BINARY}/StackADTMain
+run-adt-stack: ${BINARY}/StackADTMain
 	${BINARY}/StackADTMain
+
+
+run-array-stack: ${BINARY}/ArrayStackMain
+	${BINARY}/ArrayStackMain
+
+
+run-linked-stack: ${BINARY}/LinkedListStackMain
+	${BINARY}/LinkedListStackMain

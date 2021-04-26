@@ -48,7 +48,7 @@ public:
   	cout<<"LinkedListStack::default constructor......"<<endl;
   }
 
-  LinkedListStack(const LinkedListStack& copy): size(size), top(NULL) {
+  LinkedListStack(const LinkedListStack& copy): size(copy.size), top(NULL) {
 	copyLinkedNodes(top, copy.top);
 	cout<<"LinkedListStack::copy constructor......"<<endl;
   }
@@ -68,6 +68,7 @@ public:
 	copyLinkedNodes(top, copy.top);
 	size = copy.size;
 	cout<<"LinkedListStack::copy assignment......"<<endl;
+	return *this;
   }
 
   LinkedListStack& operator = (LinkedListStack&& temp) {
@@ -76,6 +77,7 @@ public:
 	  size = temp.size;
 	  temp.top = NULL;
 	  cout<<"LinkedListStack::move assignment......"<<endl;
+	  return *this;
   }
 
   void push(T element) {

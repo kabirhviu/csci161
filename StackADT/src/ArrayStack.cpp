@@ -23,7 +23,7 @@ public:
   }
   
   ArrayStack(const ArrayStack& copy): top(copy.top), capacity(copy.capacity), elements(new T[capacity]) {
-	  for (int i=0; i<top; i++) {
+	  for (int i=0; i<=top; i++) {
 		  elements[i] = copy.elements[i];
 	  }
 	  cout<<"ArrayStack::copy constructor......."<<endl;
@@ -35,7 +35,9 @@ public:
   }
 
   ~ArrayStack() {
-    delete [] elements;
+	  if (elements != NULL) {
+    		delete [] elements;
+	  }
     cout<<"ArrayStack::destructor......"<<endl;
   }
 
@@ -44,7 +46,7 @@ public:
 	capacity = copy.capacity;
 	delete [] elements;
 	elements = new T[capacity];
-	for ( int i=0; i<top; i++ ) {
+	for ( int i=0; i<=top; i++ ) {
 		elements[i] = copy.elements[i];
 	}
 	cout<<"ArrayStack::copy assignment......."<<endl;
@@ -56,6 +58,7 @@ public:
 	  capacity = temp.capacity;
 	  delete [] elements;
 	  elements = temp.elements;
+	  temp.elements = NULL;
 	  cout<<"ArrayStack::move assignment......"<<endl;
 	  return *this;
   }
@@ -65,7 +68,7 @@ public:
   }
 
   void push(T element) {
-    if(top<(capacity-1)){
+    if(top < (capacity-1)){
       elements[++top] = element;
     }
     else {
@@ -74,7 +77,8 @@ public:
   }
 
   T pop() {
-    if(top != -1) {
+    if(top > -1) {
+      	    
       return elements[top--];
     }
     else {
@@ -83,7 +87,7 @@ public:
   }
 
   T peek() {
-    if(top != -1) {
+    if(top > -1) {
       return elements[top];
     }
     else {

@@ -9,7 +9,7 @@ int main(){
 
   StackADT<int>* stack = NULL;
 
-  cout << "************** Testing Stack ADT ***************" << endl;
+  cout << "************** Testing Stack ADT with Runtime Polymorphism ***************" << endl;
   int choice = -1;
   cout<<"Which Stack Implementation you want to use?"<<endl;
   cout<<"Enter <1> for ArrayStack and <2> for LinkedListStack: ";
@@ -100,7 +100,7 @@ int main(){
       cerr << "Pop Error: " << msg << endl;
   }
 
-  cout << "************** End of Testing Stack ***************" << endl;
+  cout << "************** End of Testing StackADT with Runtime Polymorphism  ***************" << endl;
 
   if(stack != NULL) {
   	delete stack;
