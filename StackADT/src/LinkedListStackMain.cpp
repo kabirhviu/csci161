@@ -1,3 +1,18 @@
+/**
+ * @file -  LinkedListStackMain.cpp
+ * 
+ * Uses LinkedListStack<T> that has implemented StackADT<T> using a linked list as the internal data structure 
+ * for the stack elements.
+ *
+ * @author - Humayun Kabir, Instructor, CSCI 161, VIU
+ * @version - 0.0.1
+ * @date - April 25, 2021
+ *
+ */
+
+
+
+
 #include <iostream>
 #include <string>
 #include "StackADT.h"
@@ -356,17 +371,17 @@ int main(){
     cout << "StackADT<int>* top after pushing 1100: " << stack->peek() << endl;
   }
   catch (const char* excp){
-      cerr << "Push Error: " << excp << endl;
+      cerr << excp << endl;
   }
   stackSize = stack->getSize();
   try{
     for (int i=0; i<stackSize; i++) {
-      cout << "popped: " << stack->pop() << endl;
+      cout << "StackADT<int> pop(): " << stack->pop() << endl;
     }
-    cout << "popped: " << stack->pop() << endl;
+    cout << "StackADT<int> pop(): " << stack->pop() << endl;
   }
   catch (const char* excp){
-      cerr << "Pop Error: " << excp << endl;
+      cerr << excp << endl;
   }
 
   /*

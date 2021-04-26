@@ -1,3 +1,16 @@
+/**
+ * @file -  LinkedListStack.cpp
+ * 
+ * Implements StackADT<T> using a linked list as the internal data structure for the stack elements.
+ *
+ * @author - Humayun Kabir, Instructor, CSCI 161, VIU
+ * @version - 0.0.1
+ * @date - April 25, 2021
+ *
+ */
+
+
+
 #include <iostream>
 #include "StackADT.h"
 
@@ -7,6 +20,13 @@ template <typename T>
 class LinkedListStack: public StackADT<T> {
 
 private:
+  
+  /*
+   * Node<T>
+   * Private Inner class for LinkedListStack<T> class.
+   * This class will be used only inside the LinkedListStack<T> class.
+   * For that reason, its member variable data is not required to be encapsulated (private). 
+   */
   class Node {
 	  public:
 	  	T data;
@@ -16,6 +36,15 @@ private:
 		~Node() {}
   };
 
+  /*
+   * @brief - Copies all the linked nodes from 'src' to 'dst'
+   * 
+   * Internal helper function for LinkedListStack<T> class to copy and link
+   * all the linked nodes starting at the node 'src'.
+   *
+   * @param - dst - the first node of the copied and linked nodes.
+   * @param - src - the first node of linked nodes that is being copied.
+   */ 
   void copyLinkedNodes(Node*& dst, const Node* src) {
   	if(src == NULL) { 
 		dst = NULL;
@@ -30,7 +59,14 @@ private:
 		next = next->next;
 	}
   }	  
-
+  
+  /*
+   * @brief - Deletes all the linked nodes starting from 'node'.
+   * 
+   * Internal helper function for LinkedListStack<T> class to delete all the linked nodes starting at 'node'.
+   *
+   * @param - node - the first node of the linked nodes that are being deleted.
+   */ 
   void deleteLinkedNodes(Node*& node) {
 	while (node != NULL) {
 		Node* remove = node;
@@ -44,25 +80,40 @@ private:
 
 public:
   
-  LinkedListStack(): size(0), top(NULL) {
+  /*
+   * Default constructor
+   */
+  LinkedListStack(): StackADT<T>::StackADT(), size(0), top(NULL) {
   	cout<<"LinkedListStack::default constructor......"<<endl;
   }
 
-  LinkedListStack(const LinkedListStack& copy): size(copy.size), top(NULL) {
+  /*
+   * Copy constructor
+   */
+  LinkedListStack(const LinkedListStack& copy): StackADT<T>::StackADT(), size(copy.size), top(NULL) {
 	copyLinkedNodes(top, copy.top);
 	cout<<"LinkedListStack::copy constructor......"<<endl;
   }
 
-  LinkedListStack(LinkedListStack&& temp): size(temp.size), top(temp.top) {
+  /*
+   * Move constructor
+   */
+  LinkedListStack(LinkedListStack&& temp): StackADT<T>::StackADT(), size(temp.size), top(temp.top) {
 	  temp.top = NULL;
 	  cout<<"LinkedListStack::move constructor......"<<endl;
   }
 
+  /*
+   * Destructor
+   */
   ~LinkedListStack() {
     deleteLinkedNodes(top);
     cout<<"LinkedListStack::destructor......."<<endl;
   }
 
+  /*
+   * Copy assignment operator
+   */
   LinkedListStack& operator = (const LinkedListStack& copy) {
 	deleteLinkedNodes(top);
 	copyLinkedNodes(top, copy.top);
@@ -71,6 +122,9 @@ public:
 	return *this;
   }
 
+  /*
+   * Move assignment operator
+   */
   LinkedListStack& operator = (LinkedListStack&& temp) {
 	  deleteLinkedNodes(top);	
 	  top = temp.top;
@@ -80,14 +134,32 @@ public:
 	  return *this;
   }
 
-  void push(T element) {
+
+  /**
+   * @brief - Pushes the element on the top of the stack and advances the top
+   *
+   * This function will be available to use with LinkedListStack<T> object and both LinkedListStack<T> and StackADT<T>
+   * references.
+   *
+   * @param - element, the element to be pushed onto the stack.
+   */ 
+  void push(T element) override {
     Node* node = new Node(element);
     node->next = top;
     top = node;
     size++;
   }
 
-  T pop() {
+
+   /**
+   * @brief - Pops the top element of the stack and reverts the top
+   *
+   * This function will be available to use with LinkedListStack<T> object and both LinkedListStack<T> and StackADT<T>
+   * references.
+   *
+   * @return - top element 
+   */ 
+  T pop() override {
     if(top != NULL) {
       Node* node = top;
       T data = node->data;
@@ -101,7 +173,16 @@ public:
     }
   }
 
-  T peek() {
+
+   /**
+   * @brief - Gives the top element of the stack and does not revert the top
+   *
+   * This function will be available to use with LinkedListStack<T> object and both LinkedListStack<T> and StackADT<T>
+   * references.
+   *
+   * @return - top element 
+   */ 
+  T peek() override {
     if( top != NULL) {
       return top->data;
     }
@@ -110,11 +191,29 @@ public:
     }
   }
 
-  int getSize() {
+
+   /**
+   * @brief - Gives the current size or the number of elements that has been pushed inot the stack but not popped yet.
+   * 
+   * This function will be available to use only with LinkedListStack<T> object or reference but not with a
+   * StackADT<T> reference.
+   *
+   * @return - current size of the stack 
+   */
+  int getSize() override {
     return size;
   }
 
-  bool isEmpty() {
+
+   /**
+   * @brief - Returns true if the stack has no element to pop, false otherwise.
+   * 
+   * This function will be available to use only with LinkedListStack<T> object or reference but not with a
+   * StackADT<T> reference.
+   *
+   * @return - true if the stack is empty.
+   */
+  bool isEmpty() override {
     return size == 0 || top == NULL;
   }
 
