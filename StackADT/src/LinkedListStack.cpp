@@ -51,11 +51,11 @@ private:
 		return;
 	}
 	dst = new Node(src->data);
-       	Node* prev = dst;
+       	Node* copy = dst;
 	Node* next = src->next;
 	while(next != NULL) {
-		prev->next = new Node(next->data);
-		prev = prev->next;
+		copy->next = new Node(next->data);
+		copy = copy->next;
 		next = next->next;
 	}
   }	  
