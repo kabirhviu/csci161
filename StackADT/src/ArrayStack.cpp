@@ -72,6 +72,9 @@ public:
    * Copy assignment operator
    */
   ArrayStack& operator = (const ArrayStack& copy) {
+	if( *this == copy ) {
+		return *this;
+	}
 	top = copy.top;
 	capacity = copy.capacity;
 	delete [] elements;
@@ -88,6 +91,9 @@ public:
    * Move assignment operator
    */
   ArrayStack& operator = (ArrayStack&& temp) {
+	  if( *this == temp) {
+		  return *this;
+	  }
 	  top = temp.top;
 	  capacity = temp.capacity;
 	  delete [] elements;
