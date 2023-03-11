@@ -45,7 +45,7 @@ private:
    * @param - dst - the first node of the copied and linked nodes.
    * @param - src - the first node of linked nodes that is being copied.
    */ 
-  void copyLinkedNodes(Node*& dst, const Node* src) {
+  void deepCopy(Node*& dst, const Node* src) {
   	if(src == NULL) { 
 		dst = NULL;
 		return;
@@ -67,7 +67,7 @@ private:
    *
    * @param - node - the first node of the linked nodes that are being deleted.
    */ 
-  void deleteLinkedNodes(Node*& node) {
+  void deepClean(Node*& node) {
 	while (node != NULL) {
 		Node* remove = node;
 		node = node->next;
@@ -91,7 +91,7 @@ public:
    * Copy constructor
    */
   LinkedListStack(const LinkedListStack& copy): StackADT<T>::StackADT(), size(copy.size), top(NULL) {
-	copyLinkedNodes(top, copy.top);
+	deepCopy(top, copy.top);
 	cout<<"LinkedListStack::copy constructor......"<<endl;
   }
 
@@ -107,7 +107,7 @@ public:
    * Destructor
    */
   ~LinkedListStack() {
-    deleteLinkedNodes(top);
+    deepClean(top);
     cout<<"LinkedListStack::destructor......."<<endl;
   }
 
@@ -115,8 +115,11 @@ public:
    * Copy assignment operator
    */
   LinkedListStack& operator = (const LinkedListStack& copy) {
-	deleteLinkedNodes(top);
-	copyLinkedNodes(top, copy.top);
+	if( *this == copy) {
+		return *this;
+	}
+	deepClean(top);
+	deepCopy(top, copy.top);
 	size = copy.size;
 	cout<<"LinkedListStack::copy assignment......"<<endl;
 	return *this;
@@ -126,7 +129,10 @@ public:
    * Move assignment operator
    */
   LinkedListStack& operator = (LinkedListStack&& temp) {
-	  deleteLinkedNodes(top);	
+	  if( *this == temp) {
+		  return *this;
+	  }
+	  deepClean(top);	
 	  top = temp.top;
 	  size = temp.size;
 	  temp.top = NULL;
