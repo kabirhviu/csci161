@@ -72,7 +72,7 @@ public:
    * Copy assignment operator
    */
   ArrayStack& operator = (const ArrayStack& copy) {
-	if( *this == copy ) {
+	if( this == &copy ) {
 		return *this;
 	}
 	top = copy.top;
@@ -91,7 +91,7 @@ public:
    * Move assignment operator
    */
   ArrayStack& operator = (ArrayStack&& temp) {
-	  if( *this == temp) {
+	  if( this == &temp) {
 		  return *this;
 	  }
 	  top = temp.top;
