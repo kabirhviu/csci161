@@ -115,7 +115,7 @@ public:
    * Copy assignment operator
    */
   LinkedListStack& operator = (const LinkedListStack& copy) {
-	if( *this == copy) {
+	if( this == &copy) {
 		return *this;
 	}
 	deepClean(top);
@@ -129,7 +129,7 @@ public:
    * Move assignment operator
    */
   LinkedListStack& operator = (LinkedListStack&& temp) {
-	  if( *this == temp) {
+	  if( this == &temp) {
 		  return *this;
 	  }
 	  deepClean(top);	
